@@ -1,0 +1,30 @@
+
+ simple_exec
+   Medicine
+     MEDS
+
+
+
+ simple_exec
+   simple_exec
+     Medicine
+       MEDS
+
+
+
+
+ SALUT
+
+ simple_exec
+   SALUT
+
+
+ simple_exec
+   HELP
+
+
+ simple_exec
+   simple_exec
+     HELP
+
+

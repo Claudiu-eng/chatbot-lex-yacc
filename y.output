@@ -1,0 +1,1378 @@
+Rules useless in parser due to conflicts
+
+    7 program: ε
+
+   26 general_prescriptions: ε
+
+   82 food: ε
+
+
+State 0 conflicts: 14 reduce/reduce
+State 1 conflicts: 2 reduce/reduce
+State 16 conflicts: 9 shift/reduce, 3 reduce/reduce
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: ε
+    2        | program help '\n'
+    3        | program simple_exec
+    4        | program salut_exec simple_exec
+    5        | program salut_exec
+    6        | program error
+    7        | ε
+
+    8 simple_exec: exec_reteta '\n'
+    9            | exec_medicament '\n'
+   10            | exec_general '\n'
+   11            | exec_tratement '\n'
+
+   12 salut_exec: SALUT
+
+   13 exec_tratement: simptom_prescriptions
+   14               | ε
+
+   15 simptom_prescriptions: simptom gat
+   16                      | simptom
+   17                      | gat
+   18                      | gat simptom
+   19                      | simptom gat simptom
+   20                      | simptom simptom gat
+   21                      | gat simptom simptom
+
+   22 exec_general: general_prescriptions
+   23             | general_drawbacks
+   24             | general_benefits
+
+   25 general_prescriptions: how
+   26                      | ε
+
+   27 general_benefits: benefits
+   28                 | how benefits
+   29                 | benefits how
+
+   30 general_drawbacks: drawback
+   31                  | how drawback
+   32                  | drawback benefits
+   33                  | how drawback benefits
+   34                  | benefits drawback
+   35                  | benefits drawback drawback
+   36                  | how benefits drawback
+
+   37 exec_medicament: drugs_prescriptions
+   38                | drugs_drawbacks
+   39                | drugs_benefits
+
+   40 drugs_prescriptions: how drug
+   41                    | drug how
+
+   42 drugs_benefits: benefits drug
+   43               | how benefits drug
+   44               | drug benefits
+   45               | how drug benefits
+
+   46 drugs_drawbacks: drawback drug
+   47                | how drawback drug
+   48                | drug drawback
+   49                | how drug drawback
+   50                | drawback benefits drug
+   51                | how drawback benefits drug
+   52                | drug drawback benefits
+   53                | how drug drawback benefits
+   54                | benefits drawback drug
+   55                | how benefits drawback drug
+   56                | drug benefits drawback
+   57                | how drug benefits drawback
+
+   58 exec_reteta: food
+   59            | medicine
+
+   60 medicine: meds
+   61         | medicine meds
+   62         | how meds
+   63         | medicine_benefits
+   64         | medicine_drawbacks
+
+   65 medicine_benefits: benefits meds
+   66                  | how benefits meds
+   67                  | meds benefits
+   68                  | how meds benefits
+
+   69 medicine_drawbacks: drawback meds
+   70                   | how drawback meds
+   71                   | meds drawback
+   72                   | how meds drawback
+   73                   | drawback benefits meds
+   74                   | how drawback benefits meds
+   75                   | meds drawback benefits
+   76                   | how meds drawback benefits
+   77                   | benefits drawback meds
+   78                   | how benefits drawback meds
+   79                   | meds benefits drawback
+   80                   | how meds benefits drawback
+   81                   | drawback benefits drawback meds
+
+   82 food: ε
+   83     | eating
+   84     | eating meds
+   85     | not eating
+   86     | eating not
+   87     | not eating meds
+   88     | eating not meds
+
+   89 help: HELP
+
+   90 simptom: SIMPTOM
+
+   91 gat: GAT
+
+   92 drug: DRUG
+
+   93 drawback: DRAWBACK
+
+   94 not: NOT
+
+   95 how: HOW
+
+   96 meds: MEDS
+
+   97 benefits: BENEFITS
+
+   98 eating: EATING
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    '\n' (10) 2 8 9 10 11
+    error (256) 6
+    DRUG <str> (258) 92
+    GAT <str> (259) 91
+    SIMPTOM <str> (260) 90
+    SALUT (261) 12
+    HOW <tree> (262) 95
+    MEDS <tree> (263) 96
+    BENEFITS (264) 97
+    DRAWBACK (265) 93
+    HELP (266) 89
+    EATING (267) 98
+    NOT (268) 94
+
+
+Nonterminals, with rules where they appear
+
+    $accept (15)
+        on left: 0
+    program <tree> (16)
+        on left: 1 2 3 4 5 6 7
+        on right: 0 2 3 4 5 6
+    simple_exec <tree> (17)
+        on left: 8 9 10 11
+        on right: 3 4
+    salut_exec <tree> (18)
+        on left: 12
+        on right: 4 5
+    exec_tratement <tree> (19)
+        on left: 13 14
+        on right: 11
+    simptom_prescriptions <tree> (20)
+        on left: 15 16 17 18 19 20 21
+        on right: 13
+    exec_general <tree> (21)
+        on left: 22 23 24
+        on right: 10
+    general_prescriptions <tree> (22)
+        on left: 25 26
+        on right: 22
+    general_benefits <tree> (23)
+        on left: 27 28 29
+        on right: 24
+    general_drawbacks <tree> (24)
+        on left: 30 31 32 33 34 35 36
+        on right: 23
+    exec_medicament <tree> (25)
+        on left: 37 38 39
+        on right: 9
+    drugs_prescriptions <str> (26)
+        on left: 40 41
+        on right: 37
+    drugs_benefits <str> (27)
+        on left: 42 43 44 45
+        on right: 39
+    drugs_drawbacks <str> (28)
+        on left: 46 47 48 49 50 51 52 53 54 55 56 57
+        on right: 38
+    exec_reteta <tree> (29)
+        on left: 58 59
+        on right: 8
+    medicine <tree> (30)
+        on left: 60 61 62 63 64
+        on right: 59 61
+    medicine_benefits <tree> (31)
+        on left: 65 66 67 68
+        on right: 63
+    medicine_drawbacks <tree> (32)
+        on left: 69 70 71 72 73 74 75 76 77 78 79 80 81
+        on right: 64
+    food <tree> (33)
+        on left: 82 83 84 85 86 87 88
+        on right: 58
+    help <tree> (34)
+        on left: 89
+        on right: 2
+    simptom <tree> (35)
+        on left: 90
+        on right: 15 16 18 19 20 21
+    gat <tree> (36)
+        on left: 91
+        on right: 15 17 18 19 20 21
+    drug <tree> (37)
+        on left: 92
+        on right: 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57
+    drawback <tree> (38)
+        on left: 93
+        on right: 30 31 32 33 34 35 36 46 47 48 49 50 51 52 53 54 55 56 57 69 70 71 72 73 74 75 76 77 78 79 80 81
+    not <tree> (39)
+        on left: 94
+        on right: 85 86 87 88
+    how <tree> (40)
+        on left: 95
+        on right: 25 28 29 31 33 36 40 41 43 45 47 49 51 53 55 57 62 66 68 70 72 74 76 78 80
+    meds <tree> (41)
+        on left: 96
+        on right: 60 61 62 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 84 87 88
+    benefits <tree> (42)
+        on left: 97
+        on right: 27 28 29 32 33 34 35 36 42 43 44 45 50 51 52 53 54 55 56 57 65 66 67 68 73 74 75 76 77 78 79 80 81
+    eating <tree> (43)
+        on left: 98
+        on right: 83 84 85 86 87 88
+
+
+State 0
+
+    0 $accept: • program $end
+
+    $end      reduce using rule 1 (program)
+    $end      [reduce using rule 7 (program)]
+    error     reduce using rule 1 (program)
+    error     [reduce using rule 7 (program)]
+    DRUG      reduce using rule 1 (program)
+    DRUG      [reduce using rule 7 (program)]
+    GAT       reduce using rule 1 (program)
+    GAT       [reduce using rule 7 (program)]
+    SIMPTOM   reduce using rule 1 (program)
+    SIMPTOM   [reduce using rule 7 (program)]
+    SALUT     reduce using rule 1 (program)
+    SALUT     [reduce using rule 7 (program)]
+    HOW       reduce using rule 1 (program)
+    HOW       [reduce using rule 7 (program)]
+    MEDS      reduce using rule 1 (program)
+    MEDS      [reduce using rule 7 (program)]
+    BENEFITS  reduce using rule 1 (program)
+    BENEFITS  [reduce using rule 7 (program)]
+    DRAWBACK  reduce using rule 1 (program)
+    DRAWBACK  [reduce using rule 7 (program)]
+    HELP      reduce using rule 1 (program)
+    HELP      [reduce using rule 7 (program)]
+    EATING    reduce using rule 1 (program)
+    EATING    [reduce using rule 7 (program)]
+    NOT       reduce using rule 1 (program)
+    NOT       [reduce using rule 7 (program)]
+    '\n'      reduce using rule 1 (program)
+    '\n'      [reduce using rule 7 (program)]
+    $default  reduce using rule 1 (program)
+
+    program  go to state 1
+
+
+State 1
+
+    0 $accept: program • $end
+    2 program: program • help '\n'
+    3        | program • simple_exec
+    4        | program • salut_exec simple_exec
+    5        | program • salut_exec
+    6        | program • error
+
+    $end      shift, and go to state 2
+    error     shift, and go to state 3
+    DRUG      shift, and go to state 4
+    GAT       shift, and go to state 5
+    SIMPTOM   shift, and go to state 6
+    SALUT     shift, and go to state 7
+    HOW       shift, and go to state 8
+    MEDS      shift, and go to state 9
+    BENEFITS  shift, and go to state 10
+    DRAWBACK  shift, and go to state 11
+    HELP      shift, and go to state 12
+    EATING    shift, and go to state 13
+    NOT       shift, and go to state 14
+
+    '\n'  reduce using rule 14 (exec_tratement)
+    '\n'  [reduce using rule 26 (general_prescriptions)]
+    '\n'  [reduce using rule 82 (food)]
+
+    simple_exec            go to state 15
+    salut_exec             go to state 16
+    exec_tratement         go to state 17
+    simptom_prescriptions  go to state 18
+    exec_general           go to state 19
+    general_prescriptions  go to state 20
+    general_benefits       go to state 21
+    general_drawbacks      go to state 22
+    exec_medicament        go to state 23
+    drugs_prescriptions    go to state 24
+    drugs_benefits         go to state 25
+    drugs_drawbacks        go to state 26
+    exec_reteta            go to state 27
+    medicine               go to state 28
+    medicine_benefits      go to state 29
+    medicine_drawbacks     go to state 30
+    food                   go to state 31
+    help                   go to state 32
+    simptom                go to state 33
+    gat                    go to state 34
+    drug                   go to state 35
+    drawback               go to state 36
+    not                    go to state 37
+    how                    go to state 38
+    meds                   go to state 39
+    benefits               go to state 40
+    eating                 go to state 41
+
+
+State 2
+
+    0 $accept: program $end •
+
+    $default  accept
+
+
+State 3
+
+    6 program: program error •
+
+    $default  reduce using rule 6 (program)
+
+
+State 4
+
+   92 drug: DRUG •
+
+    $default  reduce using rule 92 (drug)
+
+
+State 5
+
+   91 gat: GAT •
+
+    $default  reduce using rule 91 (gat)
+
+
+State 6
+
+   90 simptom: SIMPTOM •
+
+    $default  reduce using rule 90 (simptom)
+
+
+State 7
+
+   12 salut_exec: SALUT •
+
+    $default  reduce using rule 12 (salut_exec)
+
+
+State 8
+
+   95 how: HOW •
+
+    $default  reduce using rule 95 (how)
+
+
+State 9
+
+   96 meds: MEDS •
+
+    $default  reduce using rule 96 (meds)
+
+
+State 10
+
+   97 benefits: BENEFITS •
+
+    $default  reduce using rule 97 (benefits)
+
+
+State 11
+
+   93 drawback: DRAWBACK •
+
+    $default  reduce using rule 93 (drawback)
+
+
+State 12
+
+   89 help: HELP •
+
+    $default  reduce using rule 89 (help)
+
+
+State 13
+
+   98 eating: EATING •
+
+    $default  reduce using rule 98 (eating)
+
+
+State 14
+
+   94 not: NOT •
+
+    $default  reduce using rule 94 (not)
+
+
+State 15
+
+    3 program: program simple_exec •
+
+    $default  reduce using rule 3 (program)
+
+
+State 16
+
+    4 program: program salut_exec • simple_exec
+    5        | program salut_exec •
+
+    DRUG      shift, and go to state 4
+    GAT       shift, and go to state 5
+    SIMPTOM   shift, and go to state 6
+    HOW       shift, and go to state 8
+    MEDS      shift, and go to state 9
+    BENEFITS  shift, and go to state 10
+    DRAWBACK  shift, and go to state 11
+    EATING    shift, and go to state 13
+    NOT       shift, and go to state 14
+
+    DRUG      [reduce using rule 5 (program)]
+    GAT       [reduce using rule 5 (program)]
+    SIMPTOM   [reduce using rule 5 (program)]
+    HOW       [reduce using rule 5 (program)]
+    MEDS      [reduce using rule 5 (program)]
+    BENEFITS  [reduce using rule 5 (program)]
+    DRAWBACK  [reduce using rule 5 (program)]
+    EATING    [reduce using rule 5 (program)]
+    NOT       [reduce using rule 5 (program)]
+    '\n'      reduce using rule 5 (program)
+    '\n'      [reduce using rule 14 (exec_tratement)]
+    '\n'      [reduce using rule 26 (general_prescriptions)]
+    '\n'      [reduce using rule 82 (food)]
+    $default  reduce using rule 5 (program)
+
+    simple_exec            go to state 42
+    exec_tratement         go to state 17
+    simptom_prescriptions  go to state 18
+    exec_general           go to state 19
+    general_prescriptions  go to state 20
+    general_benefits       go to state 21
+    general_drawbacks      go to state 22
+    exec_medicament        go to state 23
+    drugs_prescriptions    go to state 24
+    drugs_benefits         go to state 25
+    drugs_drawbacks        go to state 26
+    exec_reteta            go to state 27
+    medicine               go to state 28
+    medicine_benefits      go to state 29
+    medicine_drawbacks     go to state 30
+    food                   go to state 31
+    simptom                go to state 33
+    gat                    go to state 34
+    drug                   go to state 35
+    drawback               go to state 36
+    not                    go to state 37
+    how                    go to state 38
+    meds                   go to state 39
+    benefits               go to state 40
+    eating                 go to state 41
+
+
+State 17
+
+   11 simple_exec: exec_tratement • '\n'
+
+    '\n'  shift, and go to state 43
+
+
+State 18
+
+   13 exec_tratement: simptom_prescriptions •
+
+    $default  reduce using rule 13 (exec_tratement)
+
+
+State 19
+
+   10 simple_exec: exec_general • '\n'
+
+    '\n'  shift, and go to state 44
+
+
+State 20
+
+   22 exec_general: general_prescriptions •
+
+    $default  reduce using rule 22 (exec_general)
+
+
+State 21
+
+   24 exec_general: general_benefits •
+
+    $default  reduce using rule 24 (exec_general)
+
+
+State 22
+
+   23 exec_general: general_drawbacks •
+
+    $default  reduce using rule 23 (exec_general)
+
+
+State 23
+
+    9 simple_exec: exec_medicament • '\n'
+
+    '\n'  shift, and go to state 45
+
+
+State 24
+
+   37 exec_medicament: drugs_prescriptions •
+
+    $default  reduce using rule 37 (exec_medicament)
+
+
+State 25
+
+   39 exec_medicament: drugs_benefits •
+
+    $default  reduce using rule 39 (exec_medicament)
+
+
+State 26
+
+   38 exec_medicament: drugs_drawbacks •
+
+    $default  reduce using rule 38 (exec_medicament)
+
+
+State 27
+
+    8 simple_exec: exec_reteta • '\n'
+
+    '\n'  shift, and go to state 46
+
+
+State 28
+
+   59 exec_reteta: medicine •
+   61 medicine: medicine • meds
+
+    MEDS  shift, and go to state 9
+
+    $default  reduce using rule 59 (exec_reteta)
+
+    meds  go to state 47
+
+
+State 29
+
+   63 medicine: medicine_benefits •
+
+    $default  reduce using rule 63 (medicine)
+
+
+State 30
+
+   64 medicine: medicine_drawbacks •
+
+    $default  reduce using rule 64 (medicine)
+
+
+State 31
+
+   58 exec_reteta: food •
+
+    $default  reduce using rule 58 (exec_reteta)
+
+
+State 32
+
+    2 program: program help • '\n'
+
+    '\n'  shift, and go to state 48
+
+
+State 33
+
+   15 simptom_prescriptions: simptom • gat
+   16                      | simptom •
+   19                      | simptom • gat simptom
+   20                      | simptom • simptom gat
+
+    GAT      shift, and go to state 5
+    SIMPTOM  shift, and go to state 6
+
+    $default  reduce using rule 16 (simptom_prescriptions)
+
+    simptom  go to state 49
+    gat      go to state 50
+
+
+State 34
+
+   17 simptom_prescriptions: gat •
+   18                      | gat • simptom
+   21                      | gat • simptom simptom
+
+    SIMPTOM  shift, and go to state 6
+
+    $default  reduce using rule 17 (simptom_prescriptions)
+
+    simptom  go to state 51
+
+
+State 35
+
+   41 drugs_prescriptions: drug • how
+   44 drugs_benefits: drug • benefits
+   48 drugs_drawbacks: drug • drawback
+   52                | drug • drawback benefits
+   56                | drug • benefits drawback
+
+    HOW       shift, and go to state 8
+    BENEFITS  shift, and go to state 10
+    DRAWBACK  shift, and go to state 11
+
+    drawback  go to state 52
+    how       go to state 53
+    benefits  go to state 54
+
+
+State 36
+
+   30 general_drawbacks: drawback •
+   32                  | drawback • benefits
+   46 drugs_drawbacks: drawback • drug
+   50                | drawback • benefits drug
+   69 medicine_drawbacks: drawback • meds
+   73                   | drawback • benefits meds
+   81                   | drawback • benefits drawback meds
+
+    DRUG      shift, and go to state 4
+    MEDS      shift, and go to state 9
+    BENEFITS  shift, and go to state 10
+
+    $default  reduce using rule 30 (general_drawbacks)
+
+    drug      go to state 55
+    meds      go to state 56
+    benefits  go to state 57
+
+
+State 37
+
+   85 food: not • eating
+   87     | not • eating meds
+
+    EATING  shift, and go to state 13
+
+    eating  go to state 58
+
+
+State 38
+
+   25 general_prescriptions: how •
+   28 general_benefits: how • benefits
+   31 general_drawbacks: how • drawback
+   33                  | how • drawback benefits
+   36                  | how • benefits drawback
+   40 drugs_prescriptions: how • drug
+   43 drugs_benefits: how • benefits drug
+   45               | how • drug benefits
+   47 drugs_drawbacks: how • drawback drug
+   49                | how • drug drawback
+   51                | how • drawback benefits drug
+   53                | how • drug drawback benefits
+   55                | how • benefits drawback drug
+   57                | how • drug benefits drawback
+   62 medicine: how • meds
+   66 medicine_benefits: how • benefits meds
+   68                  | how • meds benefits
+   70 medicine_drawbacks: how • drawback meds
+   72                   | how • meds drawback
+   74                   | how • drawback benefits meds
+   76                   | how • meds drawback benefits
+   78                   | how • benefits drawback meds
+   80                   | how • meds benefits drawback
+
+    DRUG      shift, and go to state 4
+    MEDS      shift, and go to state 9
+    BENEFITS  shift, and go to state 10
+    DRAWBACK  shift, and go to state 11
+
+    $default  reduce using rule 25 (general_prescriptions)
+
+    drug      go to state 59
+    drawback  go to state 60
+    meds      go to state 61
+    benefits  go to state 62
+
+
+State 39
+
+   60 medicine: meds •
+   67 medicine_benefits: meds • benefits
+   71 medicine_drawbacks: meds • drawback
+   75                   | meds • drawback benefits
+   79                   | meds • benefits drawback
+
+    BENEFITS  shift, and go to state 10
+    DRAWBACK  shift, and go to state 11
+
+    $default  reduce using rule 60 (medicine)
+
+    drawback  go to state 63
+    benefits  go to state 64
+
+
+State 40
+
+   27 general_benefits: benefits •
+   29                 | benefits • how
+   34 general_drawbacks: benefits • drawback
+   35                  | benefits • drawback drawback
+   42 drugs_benefits: benefits • drug
+   54 drugs_drawbacks: benefits • drawback drug
+   65 medicine_benefits: benefits • meds
+   77 medicine_drawbacks: benefits • drawback meds
+
+    DRUG      shift, and go to state 4
+    HOW       shift, and go to state 8
+    MEDS      shift, and go to state 9
+    DRAWBACK  shift, and go to state 11
+
+    $default  reduce using rule 27 (general_benefits)
+
+    drug      go to state 65
+    drawback  go to state 66
+    how       go to state 67
+    meds      go to state 68
+
+
+State 41
+
+   83 food: eating •
+   84     | eating • meds
+   86     | eating • not
+   88     | eating • not meds
+
+    MEDS  shift, and go to state 9
+    NOT   shift, and go to state 14
+
+    $default  reduce using rule 83 (food)
+
+    not   go to state 69
+    meds  go to state 70
+
+
+State 42
+
+    4 program: program salut_exec simple_exec •
+
+    $default  reduce using rule 4 (program)
+
+
+State 43
+
+   11 simple_exec: exec_tratement '\n' •
+
+    $default  reduce using rule 11 (simple_exec)
+
+
+State 44
+
+   10 simple_exec: exec_general '\n' •
+
+    $default  reduce using rule 10 (simple_exec)
+
+
+State 45
+
+    9 simple_exec: exec_medicament '\n' •
+
+    $default  reduce using rule 9 (simple_exec)
+
+
+State 46
+
+    8 simple_exec: exec_reteta '\n' •
+
+    $default  reduce using rule 8 (simple_exec)
+
+
+State 47
+
+   61 medicine: medicine meds •
+
+    $default  reduce using rule 61 (medicine)
+
+
+State 48
+
+    2 program: program help '\n' •
+
+    $default  reduce using rule 2 (program)
+
+
+State 49
+
+   20 simptom_prescriptions: simptom simptom • gat
+
+    GAT  shift, and go to state 5
+
+    gat  go to state 71
+
+
+State 50
+
+   15 simptom_prescriptions: simptom gat •
+   19                      | simptom gat • simptom
+
+    SIMPTOM  shift, and go to state 6
+
+    $default  reduce using rule 15 (simptom_prescriptions)
+
+    simptom  go to state 72
+
+
+State 51
+
+   18 simptom_prescriptions: gat simptom •
+   21                      | gat simptom • simptom
+
+    SIMPTOM  shift, and go to state 6
+
+    $default  reduce using rule 18 (simptom_prescriptions)
+
+    simptom  go to state 73
+
+
+State 52
+
+   48 drugs_drawbacks: drug drawback •
+   52                | drug drawback • benefits
+
+    BENEFITS  shift, and go to state 10
+
+    $default  reduce using rule 48 (drugs_drawbacks)
+
+    benefits  go to state 74
+
+
+State 53
+
+   41 drugs_prescriptions: drug how •
+
+    $default  reduce using rule 41 (drugs_prescriptions)
+
+
+State 54
+
+   44 drugs_benefits: drug benefits •
+   56 drugs_drawbacks: drug benefits • drawback
+
+    DRAWBACK  shift, and go to state 11
+
+    $default  reduce using rule 44 (drugs_benefits)
+
+    drawback  go to state 75
+
+
+State 55
+
+   46 drugs_drawbacks: drawback drug •
+
+    $default  reduce using rule 46 (drugs_drawbacks)
+
+
+State 56
+
+   69 medicine_drawbacks: drawback meds •
+
+    $default  reduce using rule 69 (medicine_drawbacks)
+
+
+State 57
+
+   32 general_drawbacks: drawback benefits •
+   50 drugs_drawbacks: drawback benefits • drug
+   73 medicine_drawbacks: drawback benefits • meds
+   81                   | drawback benefits • drawback meds
+
+    DRUG      shift, and go to state 4
+    MEDS      shift, and go to state 9
+    DRAWBACK  shift, and go to state 11
+
+    $default  reduce using rule 32 (general_drawbacks)
+
+    drug      go to state 76
+    drawback  go to state 77
+    meds      go to state 78
+
+
+State 58
+
+   85 food: not eating •
+   87     | not eating • meds
+
+    MEDS  shift, and go to state 9
+
+    $default  reduce using rule 85 (food)
+
+    meds  go to state 79
+
+
+State 59
+
+   40 drugs_prescriptions: how drug •
+   45 drugs_benefits: how drug • benefits
+   49 drugs_drawbacks: how drug • drawback
+   53                | how drug • drawback benefits
+   57                | how drug • benefits drawback
+
+    BENEFITS  shift, and go to state 10
+    DRAWBACK  shift, and go to state 11
+
+    $default  reduce using rule 40 (drugs_prescriptions)
+
+    drawback  go to state 80
+    benefits  go to state 81
+
+
+State 60
+
+   31 general_drawbacks: how drawback •
+   33                  | how drawback • benefits
+   47 drugs_drawbacks: how drawback • drug
+   51                | how drawback • benefits drug
+   70 medicine_drawbacks: how drawback • meds
+   74                   | how drawback • benefits meds
+
+    DRUG      shift, and go to state 4
+    MEDS      shift, and go to state 9
+    BENEFITS  shift, and go to state 10
+
+    $default  reduce using rule 31 (general_drawbacks)
+
+    drug      go to state 82
+    meds      go to state 83
+    benefits  go to state 84
+
+
+State 61
+
+   62 medicine: how meds •
+   68 medicine_benefits: how meds • benefits
+   72 medicine_drawbacks: how meds • drawback
+   76                   | how meds • drawback benefits
+   80                   | how meds • benefits drawback
+
+    BENEFITS  shift, and go to state 10
+    DRAWBACK  shift, and go to state 11
+
+    $default  reduce using rule 62 (medicine)
+
+    drawback  go to state 85
+    benefits  go to state 86
+
+
+State 62
+
+   28 general_benefits: how benefits •
+   36 general_drawbacks: how benefits • drawback
+   43 drugs_benefits: how benefits • drug
+   55 drugs_drawbacks: how benefits • drawback drug
+   66 medicine_benefits: how benefits • meds
+   78 medicine_drawbacks: how benefits • drawback meds
+
+    DRUG      shift, and go to state 4
+    MEDS      shift, and go to state 9
+    DRAWBACK  shift, and go to state 11
+
+    $default  reduce using rule 28 (general_benefits)
+
+    drug      go to state 87
+    drawback  go to state 88
+    meds      go to state 89
+
+
+State 63
+
+   71 medicine_drawbacks: meds drawback •
+   75                   | meds drawback • benefits
+
+    BENEFITS  shift, and go to state 10
+
+    $default  reduce using rule 71 (medicine_drawbacks)
+
+    benefits  go to state 90
+
+
+State 64
+
+   67 medicine_benefits: meds benefits •
+   79 medicine_drawbacks: meds benefits • drawback
+
+    DRAWBACK  shift, and go to state 11
+
+    $default  reduce using rule 67 (medicine_benefits)
+
+    drawback  go to state 91
+
+
+State 65
+
+   42 drugs_benefits: benefits drug •
+
+    $default  reduce using rule 42 (drugs_benefits)
+
+
+State 66
+
+   34 general_drawbacks: benefits drawback •
+   35                  | benefits drawback • drawback
+   54 drugs_drawbacks: benefits drawback • drug
+   77 medicine_drawbacks: benefits drawback • meds
+
+    DRUG      shift, and go to state 4
+    MEDS      shift, and go to state 9
+    DRAWBACK  shift, and go to state 11
+
+    $default  reduce using rule 34 (general_drawbacks)
+
+    drug      go to state 92
+    drawback  go to state 93
+    meds      go to state 94
+
+
+State 67
+
+   29 general_benefits: benefits how •
+
+    $default  reduce using rule 29 (general_benefits)
+
+
+State 68
+
+   65 medicine_benefits: benefits meds •
+
+    $default  reduce using rule 65 (medicine_benefits)
+
+
+State 69
+
+   86 food: eating not •
+   88     | eating not • meds
+
+    MEDS  shift, and go to state 9
+
+    $default  reduce using rule 86 (food)
+
+    meds  go to state 95
+
+
+State 70
+
+   84 food: eating meds •
+
+    $default  reduce using rule 84 (food)
+
+
+State 71
+
+   20 simptom_prescriptions: simptom simptom gat •
+
+    $default  reduce using rule 20 (simptom_prescriptions)
+
+
+State 72
+
+   19 simptom_prescriptions: simptom gat simptom •
+
+    $default  reduce using rule 19 (simptom_prescriptions)
+
+
+State 73
+
+   21 simptom_prescriptions: gat simptom simptom •
+
+    $default  reduce using rule 21 (simptom_prescriptions)
+
+
+State 74
+
+   52 drugs_drawbacks: drug drawback benefits •
+
+    $default  reduce using rule 52 (drugs_drawbacks)
+
+
+State 75
+
+   56 drugs_drawbacks: drug benefits drawback •
+
+    $default  reduce using rule 56 (drugs_drawbacks)
+
+
+State 76
+
+   50 drugs_drawbacks: drawback benefits drug •
+
+    $default  reduce using rule 50 (drugs_drawbacks)
+
+
+State 77
+
+   81 medicine_drawbacks: drawback benefits drawback • meds
+
+    MEDS  shift, and go to state 9
+
+    meds  go to state 96
+
+
+State 78
+
+   73 medicine_drawbacks: drawback benefits meds •
+
+    $default  reduce using rule 73 (medicine_drawbacks)
+
+
+State 79
+
+   87 food: not eating meds •
+
+    $default  reduce using rule 87 (food)
+
+
+State 80
+
+   49 drugs_drawbacks: how drug drawback •
+   53                | how drug drawback • benefits
+
+    BENEFITS  shift, and go to state 10
+
+    $default  reduce using rule 49 (drugs_drawbacks)
+
+    benefits  go to state 97
+
+
+State 81
+
+   45 drugs_benefits: how drug benefits •
+   57 drugs_drawbacks: how drug benefits • drawback
+
+    DRAWBACK  shift, and go to state 11
+
+    $default  reduce using rule 45 (drugs_benefits)
+
+    drawback  go to state 98
+
+
+State 82
+
+   47 drugs_drawbacks: how drawback drug •
+
+    $default  reduce using rule 47 (drugs_drawbacks)
+
+
+State 83
+
+   70 medicine_drawbacks: how drawback meds •
+
+    $default  reduce using rule 70 (medicine_drawbacks)
+
+
+State 84
+
+   33 general_drawbacks: how drawback benefits •
+   51 drugs_drawbacks: how drawback benefits • drug
+   74 medicine_drawbacks: how drawback benefits • meds
+
+    DRUG  shift, and go to state 4
+    MEDS  shift, and go to state 9
+
+    $default  reduce using rule 33 (general_drawbacks)
+
+    drug  go to state 99
+    meds  go to state 100
+
+
+State 85
+
+   72 medicine_drawbacks: how meds drawback •
+   76                   | how meds drawback • benefits
+
+    BENEFITS  shift, and go to state 10
+
+    $default  reduce using rule 72 (medicine_drawbacks)
+
+    benefits  go to state 101
+
+
+State 86
+
+   68 medicine_benefits: how meds benefits •
+   80 medicine_drawbacks: how meds benefits • drawback
+
+    DRAWBACK  shift, and go to state 11
+
+    $default  reduce using rule 68 (medicine_benefits)
+
+    drawback  go to state 102
+
+
+State 87
+
+   43 drugs_benefits: how benefits drug •
+
+    $default  reduce using rule 43 (drugs_benefits)
+
+
+State 88
+
+   36 general_drawbacks: how benefits drawback •
+   55 drugs_drawbacks: how benefits drawback • drug
+   78 medicine_drawbacks: how benefits drawback • meds
+
+    DRUG  shift, and go to state 4
+    MEDS  shift, and go to state 9
+
+    $default  reduce using rule 36 (general_drawbacks)
+
+    drug  go to state 103
+    meds  go to state 104
+
+
+State 89
+
+   66 medicine_benefits: how benefits meds •
+
+    $default  reduce using rule 66 (medicine_benefits)
+
+
+State 90
+
+   75 medicine_drawbacks: meds drawback benefits •
+
+    $default  reduce using rule 75 (medicine_drawbacks)
+
+
+State 91
+
+   79 medicine_drawbacks: meds benefits drawback •
+
+    $default  reduce using rule 79 (medicine_drawbacks)
+
+
+State 92
+
+   54 drugs_drawbacks: benefits drawback drug •
+
+    $default  reduce using rule 54 (drugs_drawbacks)
+
+
+State 93
+
+   35 general_drawbacks: benefits drawback drawback •
+
+    $default  reduce using rule 35 (general_drawbacks)
+
+
+State 94
+
+   77 medicine_drawbacks: benefits drawback meds •
+
+    $default  reduce using rule 77 (medicine_drawbacks)
+
+
+State 95
+
+   88 food: eating not meds •
+
+    $default  reduce using rule 88 (food)
+
+
+State 96
+
+   81 medicine_drawbacks: drawback benefits drawback meds •
+
+    $default  reduce using rule 81 (medicine_drawbacks)
+
+
+State 97
+
+   53 drugs_drawbacks: how drug drawback benefits •
+
+    $default  reduce using rule 53 (drugs_drawbacks)
+
+
+State 98
+
+   57 drugs_drawbacks: how drug benefits drawback •
+
+    $default  reduce using rule 57 (drugs_drawbacks)
+
+
+State 99
+
+   51 drugs_drawbacks: how drawback benefits drug •
+
+    $default  reduce using rule 51 (drugs_drawbacks)
+
+
+State 100
+
+   74 medicine_drawbacks: how drawback benefits meds •
+
+    $default  reduce using rule 74 (medicine_drawbacks)
+
+
+State 101
+
+   76 medicine_drawbacks: how meds drawback benefits •
+
+    $default  reduce using rule 76 (medicine_drawbacks)
+
+
+State 102
+
+   80 medicine_drawbacks: how meds benefits drawback •
+
+    $default  reduce using rule 80 (medicine_drawbacks)
+
+
+State 103
+
+   55 drugs_drawbacks: how benefits drawback drug •
+
+    $default  reduce using rule 55 (drugs_drawbacks)
+
+
+State 104
+
+   78 medicine_drawbacks: how benefits drawback meds •
+
+    $default  reduce using rule 78 (medicine_drawbacks)
